@@ -14,7 +14,209 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bookings: {
+        Row: {
+          client_id: string | null
+          created_at: string | null
+          duration_hours: number | null
+          event_date: string
+          event_location: string
+          event_type: string
+          id: string
+          notes: string | null
+          photographer_id: string | null
+          status: string | null
+          total_price: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          client_id?: string | null
+          created_at?: string | null
+          duration_hours?: number | null
+          event_date: string
+          event_location: string
+          event_type: string
+          id?: string
+          notes?: string | null
+          photographer_id?: string | null
+          status?: string | null
+          total_price?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          client_id?: string | null
+          created_at?: string | null
+          duration_hours?: number | null
+          event_date?: string
+          event_location?: string
+          event_type?: string
+          id?: string
+          notes?: string | null
+          photographer_id?: string | null
+          status?: string | null
+          total_price?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_photographer_id_fkey"
+            columns: ["photographer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      follows: {
+        Row: {
+          created_at: string | null
+          follower_id: string
+          following_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          follower_id: string
+          following_id: string
+        }
+        Update: {
+          created_at?: string | null
+          follower_id?: string
+          following_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "follows_follower_id_fkey"
+            columns: ["follower_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "follows_following_id_fkey"
+            columns: ["following_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      photos: {
+        Row: {
+          category: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          is_featured: boolean | null
+          likes_count: number | null
+          photo_url: string
+          tags: string[] | null
+          title: string
+          user_id: string | null
+          views_count: number | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_featured?: boolean | null
+          likes_count?: number | null
+          photo_url: string
+          tags?: string[] | null
+          title: string
+          user_id?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_featured?: boolean | null
+          likes_count?: number | null
+          photo_url?: string
+          tags?: string[] | null
+          title?: string
+          user_id?: string | null
+          views_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "photos_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          cover_photo_url: string | null
+          created_at: string | null
+          experience_years: number | null
+          followers_count: number | null
+          following_count: number | null
+          full_name: string | null
+          hourly_rate: number | null
+          id: string
+          location: string | null
+          specialty: string | null
+          total_bookings: number | null
+          total_photos: number | null
+          updated_at: string | null
+          username: string | null
+          website: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          cover_photo_url?: string | null
+          created_at?: string | null
+          experience_years?: number | null
+          followers_count?: number | null
+          following_count?: number | null
+          full_name?: string | null
+          hourly_rate?: number | null
+          id: string
+          location?: string | null
+          specialty?: string | null
+          total_bookings?: number | null
+          total_photos?: number | null
+          updated_at?: string | null
+          username?: string | null
+          website?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          cover_photo_url?: string | null
+          created_at?: string | null
+          experience_years?: number | null
+          followers_count?: number | null
+          following_count?: number | null
+          full_name?: string | null
+          hourly_rate?: number | null
+          id?: string
+          location?: string | null
+          specialty?: string | null
+          total_bookings?: number | null
+          total_photos?: number | null
+          updated_at?: string | null
+          username?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
