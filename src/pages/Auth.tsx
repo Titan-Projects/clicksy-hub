@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Camera, Eye, EyeOff, Mail, Lock, User, ArrowRight, Aperture } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // Animated floating orb component
 const FloatingOrb = ({
@@ -54,6 +55,7 @@ const Auth = () => {
   const [showSignInPassword, setShowSignInPassword] = useState(false);
   const [showSignUpPassword, setShowSignUpPassword] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -427,16 +429,53 @@ const Auth = () => {
                   </div>
                   <p className="text-xs" style={{ color: "hsl(240 5% 45%)" }}>Minimum 6 characters</p>
                 </div>
+                {/* T&C Agreement */}
+                <div
+                  className="flex items-start gap-3 rounded-xl p-3"
+                  style={{
+                    background: "hsl(263 70% 50% / 0.06)",
+                    border: "1px solid hsl(263 70% 50% / 0.15)",
+                  }}
+                >
+                  <Checkbox
+                    id="agree-terms"
+                    checked={agreedToTerms}
+                    onCheckedChange={(v) => setAgreedToTerms(!!v)}
+                    className="mt-0.5 border-primary/40 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                  />
+                  <label htmlFor="agree-terms" className="text-xs leading-relaxed cursor-pointer select-none" style={{ color: "hsl(240 5% 60%)" }}>
+                    I agree to the{" "}
+                    <Link
+                      to="/terms"
+                      target="_blank"
+                      className="font-semibold hover:opacity-80 transition-opacity"
+                      style={{ color: "hsl(263 70% 65%)" }}
+                    >
+                      Terms of Service
+                    </Link>
+                    {" "}and{" "}
+                    <Link
+                      to="/privacy"
+                      target="_blank"
+                      className="font-semibold hover:opacity-80 transition-opacity"
+                      style={{ color: "hsl(263 70% 65%)" }}
+                    >
+                      Privacy Policy
+                    </Link>
+                    . I understand that my data will be used in accordance with CLICKSY's privacy practices.
+                  </label>
+                </div>
+
                 <button
                   type="submit"
-                  disabled={loading}
-                  className="w-full h-12 rounded-xl font-semibold text-white flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed group"
+                  disabled={loading || !agreedToTerms}
+                  className="w-full h-12 rounded-xl font-semibold text-white flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed group"
                   style={{
                     background: "linear-gradient(135deg, hsl(14 100% 65%), hsl(25 100% 60%))",
-                    boxShadow: loading ? "none" : "0 8px 32px hsl(14 100% 65% / 0.4)",
+                    boxShadow: (loading || !agreedToTerms) ? "none" : "0 8px 32px hsl(14 100% 65% / 0.4)",
                   }}
                   onMouseEnter={e => {
-                    if (!loading) (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
+                    if (!loading && agreedToTerms) (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
                   }}
                   onMouseLeave={e => {
                     (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
